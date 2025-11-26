@@ -17,19 +17,6 @@ class StudentAPI(APIView):
 
         student_data = Student_Task_Serializer(all_student, many = True).data
 
-        #student_list = []
-
-        #for s in all_student:
-
-
-        #    student_dict = {
-        #        "id":s.id,
-        #        "name":s.name,
-        #        "age":s.age
-        #    }
-            
-        #    student_list.append(student_dict)
-
         return Response(student_data)
     
     def post(self, request):
@@ -62,10 +49,6 @@ class TaskView(APIView):
 
         if task_id == None:
 
-            person_name = config('name')
-
-            print(person_name)
-
             all_task = Task.objects.all()
 
             task_data = Task_Data_Serializer(all_task, many=True).data
@@ -87,18 +70,6 @@ class TaskView(APIView):
         new_task.save()
 
         return Response('Task Created')
-    
-       # new_task = Task_Serializer(data=request.data)
-
-       # if new_task.is_valid():
-
-       #     new_task.save()
-
-       #     return Response("New Task Added")
-        
-       # else:
-
-       #     return Response(new_task.errors)
         
     def patch(self,request,task_id):
 
@@ -207,76 +178,3 @@ class RankSheetView(APIView):
         rank.delete()
 
         return Response("Data Deleted")
-
-
-@api_view(['GET','POST'])
-def task_list_create(request):
-
-    if request.method == 'GET':
-        
-        all_task = Task.objects.all()
-
-        task_data = Task_Serializer(all_task, many=True).data
-
-        return Response(task_data)
-    
-    elif request.method == 'POST':
-
-        new_task = Task_Serializer(data=request.data)
-
-        if new_task.is_valid():
-
-            new_task.save()
-
-            return Response("New Task Added")
-        
-        else:
-
-            return Response(new_task.errors)
-
-
-@api_view(['GET','PATCH','PUT','DELETE'])
-def task_update_delete(request, id):
-
-    task = Task.objects.get(id = id)
-
-    if request.method == 'GET':
-
-        task_data = Task_Serializer(task).data
-            
-        return Response(task_data) 
-    
-    elif request.method == 'PATCH':
-
-        update_task = Task_Serializer(task, data = request.data, partial = True)
-
-        if update_task.is_valid():
-
-            update_task.save()
-
-            return Response("Task Updated")
-        
-        else:
-
-            return Response(update_task.errors)
-
-    elif request.method == 'PUT':
-
-        update_task = Task_Serializer(task, data = request.data, partial = True)
-
-        if update_task.is_valid():
-
-            update_task.save()
-
-            return Response("Task Updated")
-        
-        else:
-
-            return Response(update_task.errors)
-    
-    elif request.method == 'DELETE':
-
-        task.delete()
-
-        return Response("Task deleted")
-    
