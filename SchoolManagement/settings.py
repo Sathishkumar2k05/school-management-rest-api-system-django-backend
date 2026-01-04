@@ -61,12 +61,7 @@ WSGI_APPLICATION = 'SchoolManagement.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': config('database'),
-        'USER':'root',
-        'PASSWORD':'sathish2k05',
-        'HOST':'localhost',
-        'PORT':'33063',
+        #These are private
     }
 }
 
@@ -118,8 +113,6 @@ SIMPLE_JWT = {
     'ROTATE_REFRESH_TOKEN': True,
     'BLACKLIST_AFTER_ROTATION': True,
 }
-
-#CORS_ALLOW_ALL_ORIGINS = True
 
 CORS_ALLOWED_ORIGINS = [
     "http://127.0.0.1:5500",
